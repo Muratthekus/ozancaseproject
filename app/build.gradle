@@ -6,6 +6,10 @@ plugins {
 android {
     compileSdk 32
 
+    def localPropertiesFile = rootProject.file("local.properties")
+    def localProperties = new Properties()
+    localProperties.load(new FileInputStream(localPropertiesFile))
+
     defaultConfig {
         applicationId "me.thekusch.ozancaseproject"
         minSdk 21
@@ -20,6 +24,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL","\"https://api.coinranking.com/\""
+            buildConfigField "String", "API_KEY", localProperties['API_KEY']
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL","\"https://api.coinranking.com/\""
+            buildConfigField "String", "API_KEY", localProperties['API_KEY']
         }
     }
     compileOptions {
