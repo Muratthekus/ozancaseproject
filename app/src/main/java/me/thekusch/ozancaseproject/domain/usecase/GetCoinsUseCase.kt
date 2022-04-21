@@ -1,8 +1,6 @@
 package me.thekusch.ozancaseproject.domain.usecase
 
-import me.thekusch.ozancaseproject.core.Resource
 import me.thekusch.ozancaseproject.core.UseCase
-import me.thekusch.ozancaseproject.domain.model.Coin
 import me.thekusch.ozancaseproject.domain.repo.CoinRepository
 import me.thekusch.ozancaseproject.presentation.home.HomeViewState
 import me.thekusch.ozancaseproject.util.Status

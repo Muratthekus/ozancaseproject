@@ -1,5 +1,6 @@
 package me.thekusch.ozancaseproject.core
 
+import me.thekusch.ozancaseproject.util.Resource
 import retrofit2.Response
 
 suspend fun <T : Any?> BaseRepository.apiCall(

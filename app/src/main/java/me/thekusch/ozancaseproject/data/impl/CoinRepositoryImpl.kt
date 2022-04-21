@@ -1,7 +1,7 @@
 package me.thekusch.ozancaseproject.data.impl
 
 import me.thekusch.ozancaseproject.core.BaseRepository
-import me.thekusch.ozancaseproject.core.Resource
+import me.thekusch.ozancaseproject.util.Resource
 import me.thekusch.ozancaseproject.core.apiCall
 import me.thekusch.ozancaseproject.data.CoinService
 import me.thekusch.ozancaseproject.domain.model.GetCoinsResponse

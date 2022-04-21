@@ -1,6 +1,4 @@
-package me.thekusch.ozancaseproject.core
-
-import me.thekusch.ozancaseproject.util.Status
+package me.thekusch.ozancaseproject.util
 
 sealed class Resource<T>(val status: Status,val data: T? = null, val message: String? = null) {
 
