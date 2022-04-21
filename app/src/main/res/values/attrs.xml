@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="CoinList">
+        <attr name="listBackgroundColor" format="color"/>
+        <attr name="listName" format="string"/>
+    </declare-styleable>
+
     <attr name="coinListStyle" format="reference"/>
 </resources>

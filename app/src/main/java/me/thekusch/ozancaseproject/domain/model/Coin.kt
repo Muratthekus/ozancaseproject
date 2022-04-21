@@ -5,7 +5,7 @@ data class Coin(
     val btcPrice: String,
     val change: String,
     val coinrankingUrl: String,
-    val color: String,
+    val color: String?,
     val iconUrl: String,
     val listedAt: Int,
     val name: String,

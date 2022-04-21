@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import me.thekusch.ozancaseproject.core.BaseViewState
 import me.thekusch.ozancaseproject.util.Status
 
-inline fun <T : BaseViewState?> LiveData<T?>.observeData(
+inline fun <T : BaseViewState?> LiveData<T>.observeData(
     lifecycleOwner: LifecycleOwner,
     crossinline success: ((T?) -> Unit) = {
         // no-op

@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import me.thekusch.ozancaseproject.core.BaseFragment
 import me.thekusch.ozancaseproject.databinding.FragmentHomeBinding
+import me.thekusch.ozancaseproject.presentation.ext.observeData
+import me.thekusch.ozancaseproject.presentation.home.components.CoinList
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment: BaseFragment<FragmentHomeBinding>() {
@@ -25,7 +27,15 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
 
     override fun observe() {
         super.observe()
+        viewModel.getCoinsLiveData.observeData(
+            lifecycleOwner = viewLifecycleOwner,
+            success = {
+                binding.coinList.setup(it?.data)
+            },
+            fail = {
 
+            }
+        )
     }
 
     companion object {

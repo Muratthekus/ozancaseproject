@@ -60,6 +60,7 @@ dependencies {
     def koin_version = "3.1.6"
     def coroutines_version = "1.5.2"
     def lifeCycleRunTime_version = "2.4.1"
+    def glide_version = "4.13.0"
 
     //Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
@@ -79,4 +80,8 @@ dependencies {
 
     // Koin for Android
     implementation "io.insert-koin:koin-android:$koin_version"
+
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
 }

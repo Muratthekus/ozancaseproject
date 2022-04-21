@@ -3,6 +3,7 @@ package me.thekusch.ozancaseproject.domain.usecase
 import me.thekusch.ozancaseproject.core.UseCase
 import me.thekusch.ozancaseproject.domain.repo.CoinRepository
 import me.thekusch.ozancaseproject.presentation.home.HomeViewState
+import me.thekusch.ozancaseproject.presentation.home.components.CoinList
 import me.thekusch.ozancaseproject.util.Status
 
 class GetCoinsUseCase(
@@ -21,7 +22,18 @@ class GetCoinsUseCase(
         return HomeViewState(
             result.status,
             result.message,
-            result.data?.data?.coins
+            result.data?.data?.coins?.map { coin ->
+                CoinList.ItemEntity(
+                    coin.change,
+                    coin.color,
+                    coin.iconUrl,
+                    coin.name,
+                    coin.price,
+                    coin.rank,
+                    coin.symbol,
+                    coin.uuid
+                )
+            }
         )
     }
 
