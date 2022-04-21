@@ -8,17 +8,23 @@ import me.thekusch.ozancaseproject.util.Status
 
 class GetCoinsUseCase(
     private val coinRepository: CoinRepository
-): UseCase.RequestUseCase<GetCoinsUseCase.Params,HomeViewState> {
+) : UseCase.RequestUseCase<GetCoinsUseCase.Params, HomeViewState> {
 
-    override suspend fun execute(params: Params?): HomeViewState{
-        if(params == null) {
+    override suspend fun execute(params: Params?): HomeViewState {
+        if (params == null) {
             return HomeViewState(Status.ERROR, error = "params can not be null")
         }
-        if(params.orderBy.isNullOrEmpty()) {
+        if (params.orderBy.isNullOrEmpty()) {
             return HomeViewState(Status.ERROR, error = "orderBy query can not be null")
         }
+        if (params.offSet == null) {
+            return HomeViewState(Status.ERROR, error = "offset query can not be null")
+        }
+        if (params.limit == null) {
+            return HomeViewState(Status.ERROR, error = "limit query can not be null")
+        }
 
-        val result = coinRepository.getCoins(orderBy = params.orderBy)
+        val result = coinRepository.getCoins(orderBy = params.orderBy, offset = params.offSet,params.limit)
         return HomeViewState(
             result.status,
             result.message,
@@ -38,8 +44,10 @@ class GetCoinsUseCase(
     }
 
     data class Params(
-        val orderBy: String?
-    ): UseCase.Params()
+        val orderBy: String?,
+        val offSet: Int?,
+        val limit: Int?
+    ) : UseCase.Params()
 
     companion object {
         const val NAME = "GetCoinsUseCase"

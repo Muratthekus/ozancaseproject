@@ -10,7 +10,7 @@ import me.thekusch.ozancaseproject.core.BaseViewHolder
 import me.thekusch.ozancaseproject.databinding.ItemComponentCoinListBinding
 
 class CoinListAdapter() :
-    BaseAdapter<CoinList.ItemEntity,CoinListAdapter.ItemViewHolder>(diffCallback) {
+    BaseAdapter<CoinList.ItemEntity, CoinListAdapter.ItemViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ItemViewHolder(
         ItemComponentCoinListBinding.inflate(
@@ -24,9 +24,10 @@ class CoinListAdapter() :
         BaseViewHolder<CoinList.ItemEntity>(binding.root) {
         init {
             itemView.setOnClickListener {
-                onItemClickListener?.invoke(boundItem?.uuid,boundItem)
+                onItemClickListener?.invoke(boundItem?.uuid, boundItem)
             }
         }
+
         override fun bind(item: CoinList.ItemEntity?) {
             super.bind(item)
             item?.let {
@@ -47,9 +48,15 @@ class CoinListAdapter() :
 }
 
 val diffCallback = object : DiffUtil.ItemCallback<CoinList.ItemEntity>() {
-    override fun areContentsTheSame(oldItem: CoinList.ItemEntity, newItem: CoinList.ItemEntity): Boolean =
+    override fun areContentsTheSame(
+        oldItem: CoinList.ItemEntity,
+        newItem: CoinList.ItemEntity
+    ): Boolean =
         oldItem == newItem
 
-    override fun areItemsTheSame(oldItem: CoinList.ItemEntity, newItem: CoinList.ItemEntity): Boolean =
+    override fun areItemsTheSame(
+        oldItem: CoinList.ItemEntity,
+        newItem: CoinList.ItemEntity
+    ): Boolean =
         oldItem.uuid == newItem.uuid
 }

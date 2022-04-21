@@ -9,11 +9,15 @@ import me.thekusch.ozancaseproject.domain.repo.CoinRepository
 
 class CoinRepositoryImpl(
     private val coinService: CoinService
-) : BaseRepository(), CoinRepository{
+) : BaseRepository(), CoinRepository {
 
-    override suspend fun getCoins(orderBy: String): Resource<GetCoinsResponse?> {
+    override suspend fun getCoins(
+        orderBy: String,
+        offset: Int,
+        limit: Int
+    ): Resource<GetCoinsResponse?> {
         return apiCall {
-            coinService.getCoins(orderBy)
+            coinService.getCoins(orderBy, offset,limit)
         }
     }
 }

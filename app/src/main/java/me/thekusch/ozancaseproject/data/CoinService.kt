@@ -9,6 +9,8 @@ interface CoinService {
 
     @GET("${Config.API_VERSION}/coins")
     suspend fun getCoins(
-        @Query("orderBy") orderBy: String
+        @Query("orderBy") orderBy: String,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
     ): GetCoinsResponse?
 }

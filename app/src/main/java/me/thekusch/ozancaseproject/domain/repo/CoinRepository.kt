@@ -5,5 +5,9 @@ import me.thekusch.ozancaseproject.domain.model.GetCoinsResponse
 
 interface CoinRepository {
 
-    suspend fun getCoins(orderBy: String): Resource<GetCoinsResponse?>
+    suspend fun getCoins(
+        orderBy: String,
+        offset: Int,
+        limit: Int
+    ): Resource<GetCoinsResponse?>
 }

@@ -3,6 +3,7 @@ package me.thekusch.ozancaseproject.presentation.home.components
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
@@ -92,7 +93,12 @@ BaseListComponent<ComponentCoinListBinding,CoinList.ItemEntity,CoinList.Entity>{
     }
 
     override fun updateItems(items: List<ItemEntity>?) {
-        itemAdapter.updateItems(items)
+        val oldList = itemAdapter.currentList.toMutableList()
+        items?.let {
+            oldList.addAll(it)
+        }
+        itemAdapter.updateItems(oldList)
+        Log.d("DENEME", "updateItems: ${itemAdapter.currentList.size}")
     }
 
     class Entity: BaseEntity()
