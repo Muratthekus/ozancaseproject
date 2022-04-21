@@ -1,9 +1,9 @@
 package me.thekusch.ozancaseproject.di
 
 import me.thekusch.ozancaseproject.core.UseCase
-import me.thekusch.ozancaseproject.domain.model.Coin
 import me.thekusch.ozancaseproject.domain.repo.CoinRepository
 import me.thekusch.ozancaseproject.domain.usecase.GetCoinsUseCase
+import me.thekusch.ozancaseproject.presentation.home.HomeViewState
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -17,5 +17,5 @@ val domainModule = module {
 
 private fun provideGetCoinsUseCase(
     coinsRepository: CoinRepository
-): UseCase.RequestUseCase<GetCoinsUseCase.Params,List<Coin>?> =
+): UseCase.RequestUseCase<GetCoinsUseCase.Params,HomeViewState> =
     GetCoinsUseCase(coinsRepository)
