@@ -1,10 +1,12 @@
 package me.thekusch.ozancaseproject.core
 
-sealed class Resource<T>(val data: T? = null, val message: String? = null) {
+import me.thekusch.ozancaseproject.util.Status
 
-    class Success<T>(data: T?) : Resource<T>(data)
+sealed class Resource<T>(val status: Status,val data: T? = null, val message: String? = null) {
 
-    class Error<T>(message: String? = null, data: T? = null) : Resource<T>(data, message)
+    class Success<T>(data: T?) : Resource<T>(Status.SUCCESS,data)
 
-    class Loading<T>(data: T? = null) : Resource<T>(data)
+    class Error<T>(message: String? = null, data: T? = null) : Resource<T>(Status.ERROR,data, message)
+
+    class Loading<T>(data: T? = null) : Resource<T>(Status.LOADING,data)
 }
