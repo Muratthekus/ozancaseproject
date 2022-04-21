@@ -64,8 +64,19 @@ dependencies {
 
     implementation "androidx.work:work-runtime-ktx:2.7.1"
 
+    // Koin AndroidX Scope features
+    implementation "org.koin:koin-androidx-scope:2.2.2"
+    // Koin AndroidX ViewModel features
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    // Koin AndroidX Fragment features
+    implementation "org.koin:koin-androidx-fragment:$koin_version"
+    // Koin AndroidX WorkManager
+    implementation "org.koin:koin-androidx-workmanager:$koin_version"
+
     // Lifecycle Runtime
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifeCycleRunTime_version"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycleRunTime_version"
     
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'

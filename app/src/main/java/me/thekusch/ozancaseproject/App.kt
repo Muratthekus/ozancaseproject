@@ -2,6 +2,7 @@ package me.thekusch.ozancaseproject
 
 import android.app.Application
 import me.thekusch.ozancaseproject.di.dataModule
+import me.thekusch.ozancaseproject.di.domainModule
 import me.thekusch.ozancaseproject.di.repositoryModule
 import me.thekusch.ozancaseproject.di.serviceModule
 import org.koin.android.ext.koin.androidContext
@@ -13,7 +14,14 @@ class App: Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App.applicationContext)
-            modules(listOf(dataModule, serviceModule,repositoryModule))
+            modules(
+                listOf(
+                    dataModule,
+                    serviceModule,
+                    repositoryModule,
+                    domainModule
+                )
+            )
         }
     }
 }
