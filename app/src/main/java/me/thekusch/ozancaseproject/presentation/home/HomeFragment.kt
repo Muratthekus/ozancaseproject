@@ -74,7 +74,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     setSnackbar("It seems there is no more data")
                     viewModel.rollBackTheOffset()
                 } else {
-                    binding.coinList.setup(it?.data)
+                    binding.coinList.setup(it?.getCoinResult())
                 }
                 viewModel.isRequestProcessing = false
             },

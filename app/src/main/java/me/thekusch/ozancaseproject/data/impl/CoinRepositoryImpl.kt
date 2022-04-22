@@ -5,6 +5,7 @@ import me.thekusch.ozancaseproject.util.Resource
 import me.thekusch.ozancaseproject.core.apiCall
 import me.thekusch.ozancaseproject.data.CoinService
 import me.thekusch.ozancaseproject.domain.model.GetCoinsResponse
+import me.thekusch.ozancaseproject.domain.model.coinDetail.GetCoinDetailResponse
 import me.thekusch.ozancaseproject.domain.repo.CoinRepository
 
 class CoinRepositoryImpl(
@@ -18,6 +19,12 @@ class CoinRepositoryImpl(
     ): Resource<GetCoinsResponse?> {
         return apiCall {
             coinService.getCoins(orderBy, offset,limit)
+        }
+    }
+
+    override suspend fun getCoinDetail(uuid: String): Resource<GetCoinDetailResponse?> {
+        return apiCall {
+            coinService.getCoinDetail(uuid)
         }
     }
 }
