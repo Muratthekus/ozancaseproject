@@ -52,7 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             viewModel.getCoinList()
         }
         binding.coinList.onItemClickListener = { id, entity ->
-            navigation.navigateToDetailPage()
+            navigation.navigateToDetailPage(id)
         }
     }
 

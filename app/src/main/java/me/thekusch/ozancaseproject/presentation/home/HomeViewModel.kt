@@ -46,10 +46,10 @@ class HomeViewModel(
     }
 
     fun getCoinList() = io {
-        requestOffset += OFFSET
         isRequestProcessing = true
         _getCoinsLiveData.result(
             getCoinsUseCase.execute(params = GetCoinsUseCase.Params(orderBy,requestOffset,LIMIT))
         )
+        requestOffset += OFFSET
     }
 }

@@ -7,7 +7,6 @@ data class Coin(
     val change: String,
     val coinrankingUrl: String,
     val color: String,
-    val description: String,
     val iconUrl: String,
     val name: String,
     val price: String,

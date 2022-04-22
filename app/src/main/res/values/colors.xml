@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="listBgColor">#F9F9F9</color>
+    <color name="green">#0DBF10</color>
+    <color name="red">#DB3238</color>
 </resources>

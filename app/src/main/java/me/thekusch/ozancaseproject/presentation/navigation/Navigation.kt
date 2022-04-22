@@ -12,7 +12,9 @@ interface Navigation {
 
     fun finish() = activity.get()?.finish()
 
-    fun navigateToDetailPage() {
-        activity.get()?.startActivity(DetailPage.dynamicStart)
+    fun navigateToDetailPage(
+        uuid: String?
+    ) {
+        activity.get()?.startActivity(DetailPage.dynamicStart(uuid))
     }
 }

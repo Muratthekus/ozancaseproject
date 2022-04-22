@@ -25,7 +25,6 @@ class GetCoinDetailUseCase(
                 CoinDetail.ItemEntity(
                     change = change,
                     color = color,
-                    description = description,
                     iconUrl = iconUrl,
                     name = name,
                     price = price,

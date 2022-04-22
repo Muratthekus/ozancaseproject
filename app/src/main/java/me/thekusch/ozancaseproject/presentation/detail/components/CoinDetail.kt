@@ -6,6 +6,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import me.thekusch.ozancaseproject.R
 import me.thekusch.ozancaseproject.core.BaseComponent
 import me.thekusch.ozancaseproject.core.BaseEntity
@@ -16,12 +18,13 @@ class CoinDetail @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.coinDetailStyle
-): FrameLayout(context, attrs, defStyleAttr), BaseComponent<ComponentCoinDetailBinding, CoinDetail.ItemEntity> {
+) : FrameLayout(context, attrs, defStyleAttr),
+    BaseComponent<ComponentCoinDetailBinding, CoinDetail.ItemEntity> {
 
     override val binding: ComponentCoinDetailBinding =
         ComponentCoinDetailBinding.inflate(
             LayoutInflater.from(context),
-            this,true
+            this, true
         )
 
     // Attribute Defaults
@@ -61,8 +64,57 @@ class CoinDetail @JvmOverloads constructor(
         }
     }
 
+    private fun getSparkLinesAsFloat(list: List<String>): List<Float> {
+        return list.map {
+            it.toFloat()
+        }
+    }
+
     override fun setup(viewEntity: ItemEntity?) {
-        TODO("Not yet implemented")
+        viewEntity?.let { entity ->
+            binding.apply {
+                val sparkList = getSparkLinesAsFloat(entity.sparkline)
+                textViewCoinName.text = entity.name
+                "$${String.format("%,f", entity.price?.toFloat())}".also {
+                    textViewCoinPrice.text = it
+                }
+                textViewHigh.text = String.format("%,f", sparkList.maxOrNull() ?: 0F)
+                textViewHigh.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.green
+                    )
+                )
+                textViewLow.text = String.format("%,f", sparkList.minOrNull() ?: 0F)
+                textViewLow.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.red
+                    )
+                )
+                "${entity.change}%".also { textViewChange.text = it }
+                if (entity.change?.contains("-") == true) {
+                    textViewChange.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.red
+                        )
+                    )
+                }
+                if (entity.change?.contains("+") == true) {
+                    textViewChange.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.green
+                        )
+                    )
+                }
+                Glide.with(context)
+                    .load(entity.iconUrl)
+                    .placeholder(R.drawable.ic_baseline_error_outline_24)
+                    .into(imageViewIcon)
+            }
+        }
     }
 
     data class ItemEntity(
@@ -70,13 +122,12 @@ class CoinDetail @JvmOverloads constructor(
         val allTimeHighTimestamp: Int,
         val change: String?,
         val color: String?,
-        val description: String?,
         val iconUrl: String?,
         val name: String?,
         val price: String?,
         val sparkline: List<String>,
         val symbol: String?,
         val uuid: String
-    ): BaseEntity()
+    ) : BaseEntity()
 
 }
