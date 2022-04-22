@@ -56,11 +56,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    override fun fetch() {
-        super.fetch()
-        viewModel.getCoinList()
-    }
-
     override fun observe() {
         super.observe()
         viewModel.getCoinsLiveData.observeData(
