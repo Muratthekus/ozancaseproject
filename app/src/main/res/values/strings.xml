@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">OzanCaseProject</string>
+
+    <string-array name="sortList">
+        <item>Price</item>
+        <item>Market Cap</item>
+        <item>24h Volume</item>
+        <item>Change</item>
+        <item>Listed At</item>
+    </string-array>
 </resources>

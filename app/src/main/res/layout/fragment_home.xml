@@ -14,7 +14,9 @@
         <me.thekusch.ozancaseproject.presentation.home.components.CoinList
             android:id="@+id/coinList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:listName="Ranking List"
+            app:listBackgroundColor="@color/listBgColor"/>
 
         <ProgressBar
             android:id="@+id/progressBar"

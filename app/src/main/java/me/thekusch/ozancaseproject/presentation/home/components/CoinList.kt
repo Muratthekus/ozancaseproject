@@ -3,8 +3,10 @@ package me.thekusch.ozancaseproject.presentation.home.components
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,12 +16,14 @@ import me.thekusch.ozancaseproject.core.BaseListComponent
 import me.thekusch.ozancaseproject.databinding.ComponentCoinListBinding
 import java.lang.Exception
 
+typealias SortSelectListener = ((pos: Int) -> Unit)
 class CoinList @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.coinListStyle
 ): FrameLayout(context, attrs, defStyleAttr),
-BaseListComponent<ComponentCoinListBinding,CoinList.ItemEntity,CoinList.Entity>{
+BaseListComponent<ComponentCoinListBinding,CoinList.ItemEntity,CoinList.Entity>,
+    AdapterView.OnItemSelectedListener{
 
     var itemAdapter = CoinListAdapter()
         private set
@@ -27,7 +31,6 @@ BaseListComponent<ComponentCoinListBinding,CoinList.ItemEntity,CoinList.Entity>{
     // Attribute Defaults
     @ColorInt
     private var _backgroundColor = Color.TRANSPARENT
-
 
     // Core Attributes
     var listBackgroundColor: Int
@@ -50,6 +53,8 @@ BaseListComponent<ComponentCoinListBinding,CoinList.ItemEntity,CoinList.Entity>{
             itemAdapter.onItemClickListener = value
         }
 
+    var onSortSelectListener: SortSelectListener? = null
+
     override val binding: ComponentCoinListBinding =
         ComponentCoinListBinding.inflate(
             LayoutInflater.from(context),
@@ -62,6 +67,15 @@ BaseListComponent<ComponentCoinListBinding,CoinList.ItemEntity,CoinList.Entity>{
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = itemAdapter
         }
+        ArrayAdapter.createFromResource(
+            context,
+            R.array.sortList,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerSortList.adapter = adapter
+        }
+        binding.spinnerSortList.onItemSelectedListener = this
     }
 
     private fun obtainStyledAttributes(attrs: AttributeSet?, defStyleAttr: Int) {
@@ -88,6 +102,14 @@ BaseListComponent<ComponentCoinListBinding,CoinList.ItemEntity,CoinList.Entity>{
         }
     }
 
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        onSortSelectListener?.invoke(p2)
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        // no-op
+    }
+
     override fun setup(items: List<ItemEntity>?, entity: Entity?) {
         updateItems(items)
     }
@@ -98,19 +120,22 @@ BaseListComponent<ComponentCoinListBinding,CoinList.ItemEntity,CoinList.Entity>{
             oldList.addAll(it)
         }
         itemAdapter.updateItems(oldList)
-        Log.d("DENEME", "updateItems: ${itemAdapter.currentList.size}")
+    }
+
+    fun clearAll() {
+        itemAdapter.clearAll()
     }
 
     class Entity: BaseEntity()
 
     data class ItemEntity(
-        val change: String,
+        val change: String?,
         val color: String?,
-        val iconUrl: String,
-        val name: String,
-        val price: String,
-        val rank: Int,
-        val symbol: String,
+        val iconUrl: String?,
+        val name: String?,
+        val price: String?,
+        val rank: Int?,
+        val symbol: String?,
         val uuid: String
     ): BaseEntity()
 

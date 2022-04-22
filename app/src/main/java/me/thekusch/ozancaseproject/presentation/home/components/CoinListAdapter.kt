@@ -45,6 +45,9 @@ class CoinListAdapter() :
             }
         }
     }
+    fun clearAll() {
+        submitList(null)
+    }
 }
 
 val diffCallback = object : DiffUtil.ItemCallback<CoinList.ItemEntity>() {

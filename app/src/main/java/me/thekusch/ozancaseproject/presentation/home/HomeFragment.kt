@@ -44,6 +44,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
             }
         }
+        binding.coinList.onSortSelectListener = { pos ->
+            viewModel.clearOffset()
+            viewModel.setNewOrderBy(pos)
+            binding.coinList.clearAll()
+            binding.progressBar.show()
+            viewModel.getCoinList()
+        }
+        binding.coinList.onItemClickListener = { id, entity ->
+            navigation.navigateToDetailPage()
+        }
     }
 
     override fun fetch() {

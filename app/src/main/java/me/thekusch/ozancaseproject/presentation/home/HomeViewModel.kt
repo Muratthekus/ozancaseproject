@@ -14,12 +14,15 @@ class HomeViewModel(
 ): BaseViewModel() {
 
     var requestOffset: Int = 0
+        private set
 
     private val OFFSET = 10
 
     private val LIMIT = 10
 
     var isRequestProcessing = false
+
+    var orderBy: String = FilterType.MARKET_CAP.filter
 
     private val _getCoinsLiveData = MutableLiveData<HomeViewState>()
 
@@ -38,9 +41,11 @@ class HomeViewModel(
         requestOffset = 0
     }
 
-    fun getCoinList(
-        orderBy: String = FilterType.MARKET_CAP.filter
-    ) = io {
+    fun setNewOrderBy(pos: Int) {
+        orderBy = FilterType.values()[pos].filter
+    }
+
+    fun getCoinList() = io {
         requestOffset += OFFSET
         isRequestProcessing = true
         _getCoinsLiveData.result(
