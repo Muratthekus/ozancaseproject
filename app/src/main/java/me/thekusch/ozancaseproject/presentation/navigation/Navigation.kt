@@ -1,6 +1,7 @@
 package me.thekusch.ozancaseproject.presentation.navigation
 
 import androidx.fragment.app.FragmentActivity
+import me.thekusch.ozancaseproject.presentation.feature.DetailPage
 import java.lang.ref.WeakReference
 
 interface Navigation {
@@ -10,4 +11,8 @@ interface Navigation {
     fun close() = activity.get()?.onBackPressed()
 
     fun finish() = activity.get()?.finish()
+
+    fun navigateToDetailPage() {
+        activity.get()?.startActivity(DetailPage.dynamicStart)
+    }
 }
