@@ -2,6 +2,7 @@ package me.thekusch.ozancaseproject.presentation.home.components
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
 import me.thekusch.ozancaseproject.R
@@ -34,8 +35,26 @@ class CoinListAdapter() :
                 binding.apply {
                     textViewCoinName.text = it.name
                     textViewCoinNickName.text = it.symbol
-                    textViewCoinPrice.text = it.price
+                    textViewCoinPrice.text = String.format("%,f", it.price?.toFloat())
                     textViewCoinChange.text = it.change
+
+                    "${it.change}%".also { textViewCoinChange.text = it }
+                    if (it.change?.contains("-") == true) {
+                        textViewCoinChange.setTextColor(
+                            ContextCompat.getColor(
+                                itemView.context,
+                                R.color.red
+                            )
+                        )
+                    }
+                    else{
+                        textViewCoinChange.setTextColor(
+                            ContextCompat.getColor(
+                                itemView.context,
+                                R.color.green
+                            )
+                        )
+                    }
 
                     Glide.with(itemView.context)
                         .load(it.iconUrl)
