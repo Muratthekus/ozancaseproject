@@ -6,6 +6,7 @@ import me.thekusch.ozancaseproject.core.apiCall
 import me.thekusch.ozancaseproject.data.CoinService
 import me.thekusch.ozancaseproject.domain.model.GetCoinsResponse
 import me.thekusch.ozancaseproject.domain.model.coinDetail.GetCoinDetailResponse
+import me.thekusch.ozancaseproject.domain.model.coinPrice.GetCoinPriceResponse
 import me.thekusch.ozancaseproject.domain.repo.CoinRepository
 
 class CoinRepositoryImpl(
@@ -25,6 +26,15 @@ class CoinRepositoryImpl(
     override suspend fun getCoinDetail(uuid: String): Resource<GetCoinDetailResponse?> {
         return apiCall {
             coinService.getCoinDetail(uuid)
+        }
+    }
+
+    override suspend fun getCoinPriceResponse(
+        uuid: String,
+        timePeriod: String
+    ): Resource<GetCoinPriceResponse?> {
+        return apiCall {
+            coinService.getCoinPriceHistory(uuid, timePeriod)
         }
     }
 }

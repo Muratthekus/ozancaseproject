@@ -41,10 +41,14 @@ class DetailFragment: BaseFragment<FragmentDetailPageBinding>() {
             lifecycleOwner = viewLifecycleOwner,
             success = {
                 activity?.title = it?.data?.symbol
-                binding.coinDetail.setup(it?.data)
+                binding.coinDetail.setup(null,it?.data)
+                viewModel.getCoinPriceHistory(uuid)
             },
-            fail = {
-
+        )
+        viewModel.getCoinPriceHistoryLiveData.observeData(
+            lifecycleOwner = viewLifecycleOwner,
+            success = {
+                binding.coinDetail.updateItems(it?.getCoinHistoryResult())
             }
         )
     }

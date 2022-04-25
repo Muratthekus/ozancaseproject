@@ -1,6 +1,7 @@
 package me.thekusch.ozancaseproject.presentation.ext
 
 import android.os.Looper
+import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,7 @@ import me.thekusch.ozancaseproject.util.Status
 
 inline fun <T : BaseViewState?> LiveData<T>.observeData(
     lifecycleOwner: LifecycleOwner,
+    progressBar: View? = null,
     crossinline success: ((T?) -> Unit) = {
         // no-op
     },
@@ -26,12 +28,15 @@ inline fun <T : BaseViewState?> LiveData<T>.observeData(
     observe(lifecycleOwner, Observer { viewState: T? ->
         when (viewState?.baseStatus) {
             Status.LOADING -> {
+                progressBar?.show()
                 loading()
             }
             Status.ERROR -> {
+                progressBar?.dismiss()
                 fail(viewState.baseError)
             }
             Status.SUCCESS -> {
+                progressBar?.dismiss()
                 success(viewState)
             }
         }

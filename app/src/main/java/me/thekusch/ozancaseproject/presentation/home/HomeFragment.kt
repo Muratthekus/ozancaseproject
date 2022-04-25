@@ -45,11 +45,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         }
         binding.coinList.onSortSelectListener = { pos ->
-            viewModel.clearOffset()
-            viewModel.setNewOrderBy(pos)
+            viewModel.changeSortType(pos)
             binding.coinList.clearAll()
             binding.progressBar.show()
-            viewModel.getCoinList()
         }
         binding.coinList.onItemClickListener = { id, entity ->
             navigation.navigateToDetailPage(id)
@@ -60,11 +58,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.observe()
         viewModel.getCoinsLiveData.observeData(
             lifecycleOwner = viewLifecycleOwner,
-            loading = {
-                binding.progressBar.show()
-            },
+            progressBar = binding.progressBar,
             success = {
-                binding.progressBar.dismiss()
                 if (it?.data.isNullOrEmpty()) {
                     setSnackbar("It seems there is no more data")
                     viewModel.rollBackTheOffset()
@@ -74,10 +69,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 viewModel.isRequestProcessing = false
             },
             fail = {
-                binding.progressBar.dismiss()
                 viewModel.rollBackTheOffset()
                 viewModel.isRequestProcessing = false
-                setSnackbar("It seems there is an error!")
+                if (viewModel.requestOffset == 0) {
+                    setSnackbar("$it") {
+                        setAction("Retry") {
+                            viewModel.getCoinList()
+                        }
+                    }
+                } else {
+                    setSnackbar("$it")
+                }
             }
         )
     }

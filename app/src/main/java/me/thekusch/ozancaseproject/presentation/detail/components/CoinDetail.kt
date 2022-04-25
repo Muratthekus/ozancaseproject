@@ -7,10 +7,13 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import me.thekusch.ozancaseproject.R
 import me.thekusch.ozancaseproject.core.BaseComponent
 import me.thekusch.ozancaseproject.core.BaseEntity
+import me.thekusch.ozancaseproject.core.BaseListComponent
 import me.thekusch.ozancaseproject.databinding.ComponentCoinDetailBinding
 import java.lang.Exception
 
@@ -19,7 +22,10 @@ class CoinDetail @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.coinDetailStyle
 ) : FrameLayout(context, attrs, defStyleAttr),
-    BaseComponent<ComponentCoinDetailBinding, CoinDetail.ItemEntity> {
+    BaseListComponent<ComponentCoinDetailBinding, CoinDetail.ItemEntity,CoinDetail.Entity> {
+
+    var itemAdapter = CoinPriceHistoryAdapter()
+        private set
 
     override val binding: ComponentCoinDetailBinding =
         ComponentCoinDetailBinding.inflate(
@@ -41,6 +47,10 @@ class CoinDetail @JvmOverloads constructor(
 
     init {
         obtainStyledAttributes(attrs, defStyleAttr)
+        binding.apply {
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.adapter = itemAdapter
+        }
     }
 
     private fun obtainStyledAttributes(attrs: AttributeSet?, defStyleAttr: Int) {
@@ -64,28 +74,28 @@ class CoinDetail @JvmOverloads constructor(
         }
     }
 
-    private fun getSparkLinesAsFloat(list: List<String>): List<Float> {
-        return list.map {
+    private fun getSparkLinesAsFloat(list: List<String>?): List<Float>? {
+        return list?.map {
             it.toFloat()
         }
     }
 
-    override fun setup(viewEntity: ItemEntity?) {
-        viewEntity?.let { entity ->
+    override fun setup(items: List<ItemEntity>?, entity: Entity?) {
+        entity?.let { entity ->
             binding.apply {
                 val sparkList = getSparkLinesAsFloat(entity.sparkline)
                 textViewCoinName.text = entity.name
                 "$${String.format("%,f", entity.price?.toFloat())}".also {
                     textViewCoinPrice.text = it
                 }
-                textViewHigh.text = String.format("%,f", sparkList.maxOrNull() ?: 0F)
+                textViewHigh.text = String.format("%,f", sparkList?.maxOrNull() ?: 0F)
                 textViewHigh.setTextColor(
                     ContextCompat.getColor(
                         context,
                         R.color.green
                     )
                 )
-                textViewLow.text = String.format("%,f", sparkList.minOrNull() ?: 0F)
+                textViewLow.text = String.format("%,f", sparkList?.minOrNull() ?: 0F)
                 textViewLow.setTextColor(
                     ContextCompat.getColor(
                         context,
@@ -115,19 +125,29 @@ class CoinDetail @JvmOverloads constructor(
                     .into(imageViewIcon)
             }
         }
+        updateItems(items)
     }
 
-    data class ItemEntity(
-        val allTimeHighPrice: String,
-        val allTimeHighTimestamp: Int,
+    override fun updateItems(items: List<ItemEntity>?) {
+        items?.let {
+            itemAdapter.updateItems(items)
+        }
+    }
+
+    data class Entity(
         val change: String?,
         val color: String?,
         val iconUrl: String?,
         val name: String?,
         val price: String?,
-        val sparkline: List<String>,
+        val sparkline: List<String>?,
         val symbol: String?,
         val uuid: String
+    ): BaseEntity()
+
+    data class ItemEntity(
+        val price: String,
+        val timeStamp: Int,
     ) : BaseEntity()
 
 }

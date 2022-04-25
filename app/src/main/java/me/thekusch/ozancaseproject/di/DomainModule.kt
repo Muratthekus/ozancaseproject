@@ -3,9 +3,11 @@ package me.thekusch.ozancaseproject.di
 import me.thekusch.ozancaseproject.core.UseCase
 import me.thekusch.ozancaseproject.domain.repo.CoinRepository
 import me.thekusch.ozancaseproject.domain.usecase.GetCoinDetailUseCase
+import me.thekusch.ozancaseproject.domain.usecase.GetCoinPriceHistoryUseCase
 import me.thekusch.ozancaseproject.domain.usecase.GetCoinsUseCase
 import me.thekusch.ozancaseproject.presentation.detail.DetailViewState
 import me.thekusch.ozancaseproject.presentation.detail.components.CoinDetail
+import me.thekusch.ozancaseproject.presentation.detail.components.PriceHistoryViewState
 import me.thekusch.ozancaseproject.presentation.home.HomeViewState
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -22,6 +24,12 @@ val domainModule = module {
             coinsRepository = get()
         )
     }
+
+    factory(named(GetCoinPriceHistoryUseCase.NAME)) {
+        provideCoinPriceHistoryUseCase(
+            coinsRepository = get()
+        )
+    }
 }
 
 private fun provideGetCoinsUseCase(
@@ -33,3 +41,8 @@ private fun provideGetCoinDetailUseCase(
     coinsRepository: CoinRepository
 ): UseCase.RequestUseCase<GetCoinDetailUseCase.Params,DetailViewState> =
     GetCoinDetailUseCase(coinsRepository)
+
+private fun provideCoinPriceHistoryUseCase(
+    coinsRepository: CoinRepository
+): UseCase.RequestUseCase<GetCoinPriceHistoryUseCase.Params,PriceHistoryViewState> =
+    GetCoinPriceHistoryUseCase(coinsRepository)

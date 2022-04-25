@@ -22,7 +22,7 @@ class GetCoinDetailUseCase(
             result.status,
             result.message,
             result.data?.data?.coin?.run {
-                CoinDetail.ItemEntity(
+                CoinDetail.Entity(
                     change = change,
                     color = color,
                     iconUrl = iconUrl,
@@ -31,8 +31,6 @@ class GetCoinDetailUseCase(
                     sparkline = sparkline,
                     symbol = symbol,
                     uuid = uuid,
-                    allTimeHighPrice = this.allTimeHigh.price,
-                    allTimeHighTimestamp = this.allTimeHigh.timestamp
                 )
             }
 

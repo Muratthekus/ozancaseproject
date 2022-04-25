@@ -7,7 +7,7 @@ import me.thekusch.ozancaseproject.util.Status
 class DetailViewState(
     val status: Status,
     val error: String? = null,
-    val data: CoinDetail.ItemEntity? = null
+    val data: CoinDetail.Entity? = null
 ): BaseViewState(status,error,data) {
     fun getCoinDetailResult() = data
 }

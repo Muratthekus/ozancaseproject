@@ -1,6 +1,7 @@
 package me.thekusch.ozancaseproject.di
 
 import me.thekusch.ozancaseproject.domain.usecase.GetCoinDetailUseCase
+import me.thekusch.ozancaseproject.domain.usecase.GetCoinPriceHistoryUseCase
 import me.thekusch.ozancaseproject.domain.usecase.GetCoinsUseCase
 import me.thekusch.ozancaseproject.presentation.detail.DetailViewModel
 import me.thekusch.ozancaseproject.presentation.home.HomeViewModel
@@ -18,7 +19,8 @@ val viewModelModule = module {
 
     viewModel {
         DetailViewModel(
-            getCoinDetailUseCase = get(named(GetCoinDetailUseCase.NAME))
+            getCoinDetailUseCase = get(named(GetCoinDetailUseCase.NAME)),
+            getCoinPriceHistoryUseCase = get(named(GetCoinPriceHistoryUseCase.NAME))
         )
     }
 }

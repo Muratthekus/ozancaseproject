@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/layout/fragment_detail_page.xml" value="0.23854166666666668" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/item_component_coin_list.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_component_price_history.xml" value="0.23854166666666668" />
       </map>
     </option>
   </component>

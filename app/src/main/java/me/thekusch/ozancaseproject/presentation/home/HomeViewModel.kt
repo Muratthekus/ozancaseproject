@@ -7,6 +7,7 @@ import me.thekusch.ozancaseproject.core.UseCase
 import me.thekusch.ozancaseproject.domain.usecase.GetCoinsUseCase
 import me.thekusch.ozancaseproject.presentation.ext.io
 import me.thekusch.ozancaseproject.presentation.ext.result
+import me.thekusch.ozancaseproject.presentation.ext.show
 import me.thekusch.ozancaseproject.util.FilterType
 
 class HomeViewModel(
@@ -43,6 +44,12 @@ class HomeViewModel(
 
     fun setNewOrderBy(pos: Int) {
         orderBy = FilterType.values()[pos].filter
+    }
+
+    fun changeSortType(pos: Int) {
+        clearOffset()
+        setNewOrderBy(pos)
+        getCoinList()
     }
 
     fun getCoinList() = io {
